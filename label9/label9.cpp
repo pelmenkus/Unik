@@ -27,9 +27,19 @@ public:
 
     void Pusk(){
         for (auto el: divisors_){
-            cout<<el<<"-ok"<<'\n';
+            cout<<el<<'\n';
         }
     }
+
+    void Znach(){
+        for (int i=0; i<divisors_.size(); i++)
+            if (divisors_[i]!=0){
+                params*=pow(i,divisors_[i]);
+                //cout<<params<<' '<<i<<' '<<divisors_[i]<<'\n';
+            }
+        cout<<params<<'\n';
+    }
+
     // Оператор умножения с перегрузкой '*'
     friend Divs operator*(const Divs& lhs, const Divs& rhs) {
         Divs result(lhs);
@@ -40,14 +50,10 @@ public:
     // Оператор перегрузки '&'
     friend Divs operator&(const Divs& lhs, const Divs& rhs) {
         Divs result(lhs);
-        int params=1;
         for (int i = 0; i < lhs.N; ++i) {
             result.divisors_[i] = std::min(lhs.divisors_[i], rhs.divisors_[i]);
             //cout<<result.divisors_[i]<<'\n';
-            if (result.divisors_[i]!=0)
-                params*=pow(result.divisors_[i],i);
         }
-        cout<<params<<'\n';
         return result;
     }
 
@@ -83,6 +89,7 @@ public:
 private:
     // Приватный метод, разложения числа на простые делители
     int N;
+    int params = 1;
     std::vector<int> divisors_;
      std::vector<int> primes;
 
@@ -104,23 +111,27 @@ int main() {
     // Creating two Divs objects
     Divs<int> a(12, 5);
     Divs<int> b(20, 5);
+    cout<<"Znacheniye A"<<'\n';
+    a.Znach();
 
     // Using the *= operator to multiply a and b
-    b.Pusk();
     cout<<"divisors B"<<'\n';
-    a.Pusk();
+    b.Pusk();
     cout<<"divisors A"<<'\n';
+    a.Pusk();
     a *= b;
 
     // Printing the result
-    std::cout << "a *= b = " << static_cast<int>(a) << std::endl;
+    std::cout << "a *= b" << std::endl;
     cout<<"New divisors A"<<'\n';
     a.Pusk();
+    cout<<"New divisors c = a & b"<<'\n';
     // Using the & operator to find the common divisors of a and b
     Divs <int>c = a & b;
-
+    c.Pusk();
     // Printing the result
-    std::cout << "Common divisors of a and b = " << static_cast<int>(c) << std::endl;
+    cout << "Znacheniye C ";
+    c.Znach();
 
     return 0;
 }
