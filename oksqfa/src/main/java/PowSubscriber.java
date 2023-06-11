@@ -7,9 +7,9 @@ import org.eclipse.paho.client.mqttv3.persist.MemoryPersistence;
 
 import static java.lang.Math.pow;
 
-public class VectorSubscriber {
+public class PowSubscriber {
     private static final String BROKER_URL = "tcp://broker.emqx.io:1883";
-    private static final String TOPIC_NAME = "vectors";
+    private static final String TOPIC_NAME = "powers";
 
     private static String stepen;
     private static String ex;
@@ -29,10 +29,10 @@ public class VectorSubscriber {
                 public void messageArrived(String topic, MqttMessage message) {
                     // Обработка полученных сообщений
                     String params = new String(message.getPayload());
-                    if (topic.equals(TOPIC_NAME + "/vector1")) {
+                    if (topic.equals(TOPIC_NAME + "/stepens")) {
                         stepen = params;
                         System.out.println("Получена степень: " + params);
-                    } else if (topic.equals(TOPIC_NAME + "/vector2")) {
+                    } else if (topic.equals(TOPIC_NAME + "/znachens")) {
                         ex = params;
                         System.out.println("Получено значение Х: " + params);
                         // Выполнение вычислений на основе векторов
