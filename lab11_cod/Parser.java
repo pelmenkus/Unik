@@ -72,7 +72,6 @@ public class Parser {
 
                     }
                if (arr[pos-1].equals(">")) {
-                   //System.out.println("pizda");
                    return true;
                }
                 else
