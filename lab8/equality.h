@@ -1,30 +1,36 @@
 #ifndef EQUALITY_H
 #define EQUALITY_H
+#include<vector>;
 using namespace std;
-template <int L, int N>
 class Equality {
 private:
-    int coefficients[N];
-    int constant;
+    int N;
+    double L;
+    std::vector <double> coefficients;
+    double constant;
 
 public:
-    Equality() {
+    Equality(double l, int n) {
+        N=n;
+        L=l;
+        coefficients.resize(N);
         for (int i = 0; i < N; i++) {
             coefficients[i] = 0;
         }
         constant = 0;
     }
 
-    void setCoefficient(int index, int value) {
+    void setCoefficient(int index, double value) {
         coefficients[index] = value - L;
     }
 
-    void setConstant(int value) {
+    void setConstant(double value) {
         constant = value - L;
+        //cout<<constant;
     }
 
-    bool checkEquality(const int* values) {
-        int result = 0;
+    bool checkEquality(const double* values) {
+        double result = 0;
         for (int i = 0; i < N; i++) {
             result += coefficients[i] * values[i];
         }

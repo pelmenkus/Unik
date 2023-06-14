@@ -32,6 +32,7 @@ public:
     }
 
     void Znach(){
+        params=1;
         for (int i=0; i<divisors_.size(); i++)
             if (divisors_[i]!=0){
                 params*=pow(i,divisors_[i]);
@@ -113,6 +114,8 @@ int main() {
     Divs<int> b(20, 5);
     cout<<"Znacheniye A"<<'\n';
     a.Znach();
+    cout<<'\n';
+    a.Pusk();
 
     // Using the *= operator to multiply a and b
     cout<<"divisors B"<<'\n';

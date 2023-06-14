@@ -3,7 +3,7 @@ public class Main {
         String s;
 
         s="template < " +
-                "template < typename T , int S > " +
+                "template <  < typename T , int S > " +
                 "class C , " +
                 "typename T , int N " +
                 ">";
