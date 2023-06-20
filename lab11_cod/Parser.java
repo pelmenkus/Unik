@@ -5,6 +5,7 @@ public class Parser {
     private String slovar="< , template int typename >";
     private int pos, len,in;
     private String[] res;
+    private int flag=0;
     public Parser(String s){
         s+=" ";
         System.out.println(s);
@@ -39,6 +40,7 @@ public class Parser {
                 //System.out.println(pos);
                 if (arr[pos].equals("<")){
                     pos++;
+                    flag++;
                     while (pos < len) {
                         if (arr[pos].equals("\n"))
                             pos++;
@@ -72,13 +74,17 @@ public class Parser {
 
                     }
                if (arr[pos-1].equals(">")) {
+                   flag--;
                    return true;
                }
                 else
                     return false;
             }
         }
-        return true;
+        if (flag==0)
+            return true;
+        else
+            return false;
     }
 
     private boolean Class(){
