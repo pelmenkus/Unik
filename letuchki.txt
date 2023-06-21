@@ -1,0 +1,199 @@
+import java.util.HashSet;
+
+class Roots<T>{
+    private HashSet<T> container;
+    
+    interface Functor<T>{
+    void accept(T t);
+    }
+    interface Function<T, R>{
+    R apply(T t);
+    }
+    
+    Roots(HashSet<T> c)
+    {
+        this.container = c;
+    }
+    
+    public static Roots<Double> of(double a, double b, double c, double p){
+        HashSet<Double> roots = new HashSet<>();
+        
+        if(a == 0){
+            if(b != 0) roots.add(-c/b);
+        }else{
+            double d = b*b - 4 * a * c;
+            if(d >= 0){
+                if(d<p) d = 0;
+                roots.add((-b + Math.sqrt(d))/(2*a));
+                roots.add((-b - Math.sqrt(d))/(2*a));
+            }
+        }
+        return new Roots<>(roots);
+    }
+    
+    public <R> Roots<R> map(Function<T, R> f){
+        HashSet<R> c = new HashSet<>();
+        for(T t: container) c.add(f.apply(t));
+        return new Roots<>(c);
+    }
+    public <R> Roots<R> flatmap(Function<T, Roots<R>> f){
+        HashSet<R> c = new HashSet<>();
+        map(f).forEach(rs -> c.addAll(rs.container));
+        return new Roots<>(c);    
+    }
+    
+    public void forEach(Functor<T> f){
+        for(T t : container) f.accept(t);
+    } 
+    
+}
+
+
+
+public class Main
+{
+	public static void main(String[] args) {
+		
+		
+		Roots.of(1,2,-3,1e-10).flatmap(y -> Roots.of(1,2,-y,1e-10)).forEach(x -> System.out.print(x + " "));
+		System.out.println("Test1");
+		
+
+		Roots.of(1,4,4,1e-10).flatmap(y -> Roots.of(1,2,-y,1e-10)).forEach(x -> System.out.print(x + " "));
+		System.out.println("Test2");
+		
+		Roots.of(1,-4,4,1e-10).flatmap(y -> Roots.of(1,2,-y,1e-10)).forEach(x -> System.out.print(x + " "));
+		System.out.println("Test3");
+	}
+}
+
+
+/////////////////////////////////
+
+import java.util.HashSet;
+
+public class LinearEqSolv {
+
+    public static void main(String[] args) {
+        System.out.println("Выполнил: Краев Степан Алексеевич");
+        System.out.println("Группа: ИУ9-21Б");
+        System.out.println("Вариант 2");
+
+        Roots<Double> roots = Roots.of(2, 3, 8, 4, -5, -7);
+        HashSet<Double>solutions = roots.apply(x -> x);
+
+        if (solutions.isEmpty()) {
+            System.out.println("Система уравнений не имеет решений.");
+        } else {
+            System.out.println("Входные данные: 2, 3, 8, 4, -5, -7");
+            System.out.println("Решение:");
+            int i = 1;
+            for (Double solution : solutions) {
+                System.out.println("x" + i + " = " + solution);
+                i++;
+            }
+        }
+        roots = Roots.of(2, 3, 5, 1, -1, 1);
+        solutions = roots.apply(x -> x);
+
+        if (solutions.isEmpty()) {
+            System.out.println("Система уравнений не имеет решений.");
+        } else {
+            System.out.println("Входные данные: 2, 3, 5, 1, -1, 1");
+            System.out.println("Решение:");
+            int i = 1;
+            for (Double solution : solutions) {
+                System.out.println("x" + i + " = " + solution);
+                i++;
+            }
+        }
+
+        roots = Roots.of(-2, 5, 12, 3, -4, -5);
+        solutions = roots.apply(x -> x);
+
+        if (solutions.isEmpty()) {
+            System.out.println("Система уравнений не имеет решений.");
+        } else {
+            System.out.println("Входные данные: -2, 5, 12, 3, -4, -5");
+            System.out.println("Решение:");
+            int i = 1;
+            for (Double solution : solutions) {
+                System.out.println("x" + i + " = " + solution);
+                i++;
+            }
+        }
+
+    }
+
+    public static class Roots<T> {
+        private HashSet<T> container;
+
+        private Roots(HashSet<T> container) {
+            this.container = container;
+        }
+
+        public static Roots<Double> of(double a1, double b1, double c1, double a2, double b2, double c2) {
+            double d = a1 * b2 - a2 * b1;
+            double dx = c1 * b2 - c2 * b1;
+            double dy = a1 * c2 - a2 * c1;
+
+            if (d!=0) {
+                double x = dx / d;
+                double y = dy / d;
+                HashSet<Double> solutions = new HashSet<>();
+                solutions.add(x);
+                solutions.add(y);
+                return new Roots<>(solutions);
+            } else {
+                return new Roots<>(new HashSet<>());
+            }
+        }
+
+        public HashSet<T> apply(Function<T> f) {
+            HashSet<T> result = new HashSet<>();
+            for (T t : container) {
+                result.add(f.apply(t));
+            }
+            return result;
+        }
+    }
+
+    public interface Function<T> {
+        T apply(T t);
+    }
+}
+
+
+////////////////////////////////////
+
+
+public class Main
+{
+	public static void main(String[] args) {
+		Uchashiysa Oleg = new Uchashiysa("ВУЗ");
+		Oleg.Uchitsa_Hochesh("Yes");
+		Baumanec Anna = new Baumanec("Иу15-23М");
+		System.out.println(Anna.Type_Zavedeniya);
+		System.out.println(Anna.kafedra);
+		Anna.Sessiya("zabila");
+		System.out.println(Oleg.Type_Zavedeniya);
+	}
+}
+
+////////////////////////
+
+public class Main
+{
+
+  public static void main (String[] args)
+  {
+    System.out.println ("Краев Степан");
+    Auto test = new Auto (0);
+    test.Print();
+    test.Status(1);
+    test.Print();
+  }
+}
+
+
+
