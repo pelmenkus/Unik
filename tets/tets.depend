@@ -1,0 +1,15 @@
+# depslib dependency file v1.0
+1680907136 source:e:\main.cpp
+	<bits/stdc++.h>
+	"chislo.h"
+
+1680905420 e:\chislo.h
+	<bits/stdc++.h>
+
+1584205420 source:e:\tets\main.cpp
+	<iostream>
+
+1680906830 source:e:\methoods.cpp
+	"chislo.h"
+	<bits/stdc++.h>
+
