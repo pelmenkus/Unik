@@ -1,0 +1,12 @@
+# depslib dependency file v1.0
+1681750511 source:c:\users\stepa\documents\label8\main.cpp
+	<bits/stdc++.h>
+	"Equality.h"
+
+1681742409 c:\users\stepa\documents\label8\include\equality.h
+	<bits/stdc++.h>
+
+1681742317 source:c:\users\stepa\documents\label8\src\equality.cpp
+	"Equality.h"
+	<bits/stdc++.h>
+

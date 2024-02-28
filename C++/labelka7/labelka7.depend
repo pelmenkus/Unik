@@ -1,0 +1,12 @@
+# depslib dependency file v1.0
+1681469969 source:c:\users\stepa\documents\lab7\main.cpp
+	<bits/stdc++.h>
+	"chislo.h"
+
+1681469969 c:\users\stepa\documents\lab7\chislo.h
+	<bits/stdc++.h>
+
+1681474430 source:c:\users\stepa\documents\lab7\methoods.cpp
+	"chislo.h"
+	<bits/stdc++.h>
+
