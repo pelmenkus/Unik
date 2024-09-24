@@ -1,64 +1,56 @@
-import glfw
 from OpenGL.GL import *
-delta = 0.1
-angle = 0
-posx = 0
-posy = 0
-size = 0
+from OpenGL.GLUT import *
+from OpenGL.GLU import *
 
-def main():
-    if not glfw.init():
-        return
-    window = glfw.create_window(640, 640, "Lab1", None, None)
-    if not window:
-        glfw.terminate()
-        return
-    glfw.make_context_current(window)
-    glfw.set_key_callback(window, key_callback)
-    glfw.set_scroll_callback(window, scroll_callback)
-    while not glfw.window_should_close(window):
-        display(window)
-    glfw.destroy_window(window)
-    glfw.terminate()
+rotation_angle = 0.0
+rotation_enabled = True
 
-def display(window):
-    global angle
-    glClear(GL_COLOR_BUFFER_BIT)
-    glLoadIdentity()
-    glClearColor(1.0, 1.0, 1.0, 1.0)
-    glPushMatrix()
-    glRotatef(angle, 0, 0, 1)
-    glBegin(GL_POLYGON)
-    glColor3f(0.1,0.1,0.1)
-    glVertex2f(posx + size + 0.5,posy + size + 0.5)
-    glColor3f(0.35,0.0,0.89)
-    glVertex2f(posx - size + -0.5,posy + size + 0.5)
-    glColor3f(0.0,1.0,1.0)
-    glVertex2f(posx - size + -0.5,posy - size + -0.5)
-    glColor3f(0.78,0.23,1.0)
-    glVertex2f(posx + size + 0.5,posy - size + -0.5)
+def square():
+    glBegin(GL_QUADS)
+    glVertex2f(50, 50)
+    glVertex2f(450, 50)
+    glVertex2f(450, 450)
+    glVertex2f(50, 450)
     glEnd()
 
-    glPopMatrix()
-    angle += delta
-    glfw.swap_buffers(window)
-    glfw.poll_events()
+def keyPressed(key, x, y):
+    global rotation_enabled
 
-def key_callback(window, key, scancode, action, mods):
-    global delta
-    global angle
-    if action == glfw.PRESS:
-        if key == glfw.KEY_RIGHT:
-            delta = -3
-        if key == 263: # glfw.KEY_LEFT
-            delta = 3
+    if key == b" ":
+        rotation_enabled = not rotation_enabled
 
-def scroll_callback(window, xoffset, yoffset):
-    global size
-    if (xoffset > 0):
-        size -= yoffset/10
-    else:
-        size += yoffset/10
+def iterate():
+    glViewport(0, 0, 500, 500)
+    glMatrixMode(GL_PROJECTION)
+    glLoadIdentity()
+    glOrtho(0.0, 500, 0.0, 500, 0.0, 1.0)
+    glMatrixMode (GL_MODELVIEW)
+    glLoadIdentity()
 
-if __name__ == "__main__":
-    main()
+def showScreen():
+    global rotation_angle
+    global rotation_enabled
+
+    if rotation_enabled:
+        rotation_angle += 0.5
+
+    glClearColor(255,255,255, 0)
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
+    glLoadIdentity()
+    iterate()
+    glColor3f(0, 255, 0)
+    glTranslatef(250, 250, 0.0)
+    glRotatef(rotation_angle, 0.0, 0.0, 1.0)
+    glTranslatef(-250, -250, 0.0)
+    square()
+    glutSwapBuffers()
+
+glutInit()
+glutInitDisplayMode(GLUT_RGBA)
+glutInitWindowSize(500, 500)
+glutInitWindowPosition(0, 0)
+wind = glutCreateWindow(b"Lab1")
+glutDisplayFunc(showScreen)
+glutIdleFunc(showScreen)
+glutKeyboardFunc(keyPressed)
+glutMainLoop()
